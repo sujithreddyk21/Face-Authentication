@@ -11,26 +11,18 @@ DEVICE = os.getenv("DEVICE", "cpu")
 
 
 class FaceModels:
-    """
-    Loads:
-    - MTCNN face detector
-    - InceptionResnetV1 embedder (FaceNet)
-    """
+  
 
     def __init__(self, device: Optional[str] = None):
         self.device = device or DEVICE
         self._init_detector()
         self._init_embedder()
 
-    # -------------------------
-    # Load MTCNN detector
-    # -------------------------
+
     def _init_detector(self):
         self.detector = MTCNN(keep_all=True, device=self.device)
 
-    # -------------------------
-    # Load FaceNet embedder
-    # -------------------------
+    
     def _init_embedder(self):
         self.embedder = (
             InceptionResnetV1(pretrained="vggface2")
@@ -39,9 +31,7 @@ class FaceModels:
         )
         self.embedding_dim = 512
 
-    # -------------------------
-    # Face Detection
-    # -------------------------
+    
     def detect(self, rgb_image: np.ndarray):
         from PIL import Image
 
@@ -66,9 +56,6 @@ class FaceModels:
 
         return faces
 
-    # -------------------------
-    # Crop & Resize
-    # -------------------------
     def crop_align(self, rgb_image: np.ndarray, face: Dict[str, Any], size=(160, 160)):
         x1, y1, x2, y2 = face["box"]
         h, w = rgb_image.shape[:2]
@@ -84,9 +71,7 @@ class FaceModels:
         face_img = cv2.resize(crop, size)
         return face_img
 
-    # -------------------------
-    # Embeddings
-    # -------------------------
+   
     def get_embedding(self, face_rgb: np.ndarray) -> np.ndarray:
         img = face_rgb.astype(np.float32)
 
@@ -109,3 +94,4 @@ class FaceModels:
             emb = emb / norm
 
         return emb
+
