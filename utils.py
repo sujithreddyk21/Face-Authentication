@@ -17,7 +17,6 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
     if na == 0 or nb == 0:
         return 0.0
     return float(np.dot(a, b) / (na * nb))
-# utils.py
 
 import numpy as np
 
@@ -38,3 +37,4 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
     if na == 0 or nb == 0:
         return 0.0
     return float(np.dot(a, b) / (na * nb))
+
